@@ -3,7 +3,8 @@ var saveButtonEl = $('.btn');
 var pastTimeEl = $('.past');
 var presentTimeEl = $('.present');
 var futureTimeEl = $('.future');
-var currentDateEl = $('.currentDay');
+var currentDateEl = $('#currentDay');
+var rowEl = $('.row');
 var hour = $('.hour');
 var nineAM = $('.description-9');
 var tenA = $('.description-10');
@@ -14,85 +15,73 @@ var twoPM = $('.description-14');
 var threePM = $('.description-15');
 var fourPM = $('.description-16');
 var fivePM = $('.description-17');
+var todaysTime = dayjs().format('MMM DD, YYYY [at] hh:mm:ss a');
 
-var nineContainer = $('#hour-9');
-var tenContainer = $('#hour-10');
-var elevenContainer = $('#hour-11');
-var twelveContainer = $('#hour-12');
-var thirteenContainer = $('#hour-13');
-var fourteenContainer = $('#hour-14');
-var fifteenContainer = $('#hour-15');
-var sixteenContainer = $('#hour-16');
-var seventeenContainer = $('#hour-17');
-
-var timeEl = [
-nineAM = 9,
-tenAM = 10,
-elevenAM = 11,
-noon = 12,
-onePM = 13,
-twoPM = 14,
-threePM = 15,
-fourPM = 16,
-fivePM = 17
-];
-
-var inputText9 = localStorage.setItem('nineAM', nineAM);
-var inputText10 = localStorage.setItem('tenAM', tenAM);
-var inputText11 = localStorage.setItem('elevenAM', elevenAM);
-var inputText12 = localStorage.setItem('noon', noon);
-var inputText13 = localStorage.setItem('onePM', onePM);
-var inputText14 = localStorage.setItem('twoPM', twoPM);
-var inputText15 = localStorage.setItem('threePM', threePM);
-var inputText16= localStorage.setItem('fourPM', fourPM);
-var inputText17 = localStorage.setItem('fivePM', fivePM);
+var input9 = $('#9 textarea');
+var input10 = $('#10 textarea');
+var input11 = $('#11 textarea');
+var input12 = $('#12 textarea');
+var input13 = $('#13 textarea');
+var input14 = $('#14 textarea');
+var input15 = $('#15 textarea');
+var input16 = $('#16 textarea');
+var input17 = $('#17 textarea');
 
 
 // Calling the function that contains all of the other functions within the page.
 
-function runApp() {
+
   
   displayTime()
   
   function displayTime() {
     var todaysTime = dayjs().format('MMM DD, YYYY [at] hh:mm:ss a');
     currentDateEl.text(todaysTime);
+    console.log(todaysTime)
   }
   
-  function status() {
-  currentTime = dayjs().format('hh').parseInt();
+  // status();
+  // function status() {
+  // currentTime = dayjs().format('hh').parseInt();
 
-  if (currentTime > timeEl.child['']) {
-    timeEl.$(this).addClass(".past")
-    }
-    else if (currentTime < timeEl.child['']) {
-        timeEl.$(this).addClass(".future")
+  // if (currentTime > timeEl.child['']) {
+  //   timeEl.$(this).addClass(".past")
+  //   }
+  //   else if (currentTime < timeEl.child['']) {
+  //       timeEl.$(this).addClass(".future")
+  //     }
+  //   else {
+  //     timeEl.$(this).addClass('.present')
+  //   };
+
+
+    $(rowEl).each(function() {
+      var todaysTime = dayjs().format('H');
+      currentDateEl.innerText = todaysTime
+      console.log(todaysTime);
+      var specificHour = $(this).attr('id');
+
+      if (specificHour < todaysTime) {
+        $(this).addClass('past')
+      } else if (specificHour > todaysTime) {
+        $(this).addClass('future')
+      } else if (specificHour == todaysTime) {
+        $(this).addClass('present')
       }
-    else {
-      timeEl.$(this).addClass('.present')
-    };
-
+      }
+    );
     
-    
-    saveButtonEl.on('click', function() {
-      preventDefault();
-      var dataValue = $(this).siblings('.description').val();
-      var time = $(this).parent().attr('id');
-      localStorage.setItem(dataValue);
-      if (inputData) {
-        var inputData = localStorage.getItem(time, value);
-        inputData[dataValue] = value;
-        descriptionEl.innerText=text
-        localStorage.setItem(time, value);
-      };
-      
-      var dataValue = JSON.parse(localStorage.getItem(inputData))
-      console.log(time);
-      console.log(value);
-    });
-    
-  };
-}
+    saveButtonEl.click(function() {
+    var dataValue = $(this).siblings('.description').val();
+    var currentDateEl = $(this).parent().attr('id');
+    var inputData = JSON.parse(localStorage.getItem('taskList'))
+     if (!inputData) {
+       inputData = {};
+     }
+    inputData[currentDateEl] = dataValue
+    localStorage.setItem('taskList', JSON.stringify(inputData));
+  });
+  
 
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
@@ -120,16 +109,3 @@ function runApp() {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-
-// $('.saveBtn').on('click', function() {
-//   returnText()
-//   var value = $(this).siblings('.description').val();
-//   var time = $(this).parent().attr('id');
-//   localStorage.setItem(time, value);
-//  var text = localStorage.getItem(time, value)
-//  if(text){
-//   inputDescription.innerText=text
-//  }
-//   console.log(time)
-//   console.log(value)
-// });
