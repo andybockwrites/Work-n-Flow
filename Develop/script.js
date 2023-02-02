@@ -15,23 +15,22 @@ var twoPM = $('.description-14');
 var threePM = $('.description-15');
 var fourPM = $('.description-16');
 var fivePM = $('.description-17');
-var todaysTime = dayjs().format('MMM DD, YYYY [at] hh:mm:ss a');
-
-var input9 = $('#9 textarea');
-var input10 = $('#10 textarea');
-var input11 = $('#11 textarea');
-var input12 = $('#12 textarea');
-var input13 = $('#13 textarea');
-var input14 = $('#14 textarea');
-var input15 = $('#15 textarea');
-var input16 = $('#16 textarea');
-var input17 = $('#17 textarea');
 
 
-// Calling the function that contains all of the other functions within the page.
+var input9 = $('#9 textarea')
+var input10 = $('#10 textarea')
+var input11 = $('#11 textarea')
+var input12 = $('#12 textarea')
+var input13 = $('#13 textarea')
+var input14 = $('#14 textarea')
+var input15 = $('#15 textarea')
+var input16 = $('#16 textarea')
+var input17 = $('#17 textarea')
 
 
   
+$(document).ready(function () {
+
   displayTime()
   
   function displayTime() {
@@ -40,27 +39,15 @@ var input17 = $('#17 textarea');
     console.log(todaysTime)
   }
   
-  // status();
-  // function status() {
-  // currentTime = dayjs().format('hh').parseInt();
-
-  // if (currentTime > timeEl.child['']) {
-  //   timeEl.$(this).addClass(".past")
-  //   }
-  //   else if (currentTime < timeEl.child['']) {
-  //       timeEl.$(this).addClass(".future")
-  //     }
-  //   else {
-  //     timeEl.$(this).addClass('.present')
-  //   };
-
-
+  
+  
     $(rowEl).each(function() {
-      var todaysTime = dayjs().format('H');
+      var todaysTime = parseInt(dayjs().format('H'));
       currentDateEl.innerText = todaysTime
       console.log(todaysTime);
-      var specificHour = $(this).attr('id');
-
+      var specificHour = parseInt($(this).attr('id'));
+      console.log(specificHour);
+      
       if (specificHour < todaysTime) {
         $(this).addClass('past')
       } else if (specificHour > todaysTime) {
@@ -68,20 +55,40 @@ var input17 = $('#17 textarea');
       } else if (specificHour == todaysTime) {
         $(this).addClass('present')
       }
-      }
+    }
     );
     
+    
+    
+    
     saveButtonEl.click(function() {
-    var dataValue = $(this).siblings('.description').val();
-    var currentDateEl = $(this).parent().attr('id');
-    var inputData = JSON.parse(localStorage.getItem('taskList'))
-     if (!inputData) {
-       inputData = {};
-     }
-    inputData[currentDateEl] = dataValue
-    localStorage.setItem('taskList', JSON.stringify(inputData));
-  });
-  
+      var dataValue = $(this).siblings('.description').val();
+      var currentDateEl = $(this).parent().attr('id');
+      var inputData = JSON.parse(localStorage.getItem('taskList'))
+      if (!inputData) {
+        inputData = {};
+      }
+      inputData[currentDateEl] = dataValue
+      localStorage.setItem('taskList', JSON.stringify(inputData));
+
+    
+    
+    if (list){
+      input9.text(inputData['9'])
+      input10.text(inputData['10'])
+      input11.text(inputData['11'])
+      input12.text(inputData['12'])
+      input13.text(inputData['13'])
+      input14.text(inputData['14'])
+      input15.text(inputData['15'])
+      input16.text(inputData['16'])
+      input17.text(inputData['17'])
+}})});
+      
+      
+      // for (var i = 0; i <timeInputs.length; i++) {
+      //   timeInputs.text('tasklist');
+   
 
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
@@ -89,12 +96,12 @@ var input17 = $('#17 textarea');
 // in the html.
 
 
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
+// TODO: Add a listener for click events on the save button. This code should
+// use the id in the containing time-block as a key to save the user input in
+// local storage. HINT: What does `this` reference in the click listener
+// function? How can DOM traversal be used to get the "hour-x" id of the
+// time-block containing the button that was clicked? How might the id be
+// useful when saving the description in local storage?
 
 
   //
@@ -109,3 +116,32 @@ var input17 = $('#17 textarea');
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+  
+  // status();
+  // function status() {
+  // currentTime = dayjs().format('hh').parseInt();
+  
+  // if (currentTime > timeEl.child['']) {
+  //   timeEl.$(this).addClass(".past")
+  //   }
+  //   else if (currentTime < timeEl.child['']) {
+  //       timeEl.$(this).addClass(".future")
+  //     }
+  //   else {
+  //     timeEl.$(this).addClass('.present')
+  //   };
+
+
+      //   $('.saveBtn').on('click', function() {
+      
+    
+      //     var value = $(this).siblings('.description').val();
+        
+      //     var id = $(this).parent().attr('id');
+      //   var list = JSON.parse(localStorage.getItem('tasksList'))
+      //   if (!list){
+      //     list = {}
+      //   }
+      //   list[id] = value
+      //     localStorage.setItem('tasksList', JSON.stringify(list));
+      // })
